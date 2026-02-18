@@ -1,0 +1,209 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Language-Tutor</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="top-bar">
+        <div class="brand">
+          <div class="brand-mark">LT</div>
+          <div>
+            <div class="brand-title">Language-Tutor</div>
+            <div class="brand-subtitle">Black + Green learning studio</div>
+          </div>
+        </div>
+        <div class="status">
+          <span id="status-text">Guest</span>
+          <button id="logout-btn" class="ghost" type="button">Log out</button>
+        </div>
+      </header>
+
+      <div class="layout">
+        <nav class="side-nav">
+          <button class="nav-btn active" data-target="view-account">Create Account</button>
+          <button class="nav-btn" data-target="view-login">Login</button>
+          <button class="nav-btn" data-target="view-languages" data-auth="true">Languages</button>
+          <button class="nav-btn" data-target="view-vocab" data-auth="true">Vocabulary</button>
+          <button class="nav-btn" data-target="view-story" data-auth="true">Story Lab</button>
+        </nav>
+
+        <main class="content">
+          <section class="panel" id="view-account" data-view>
+            <div class="panel-header">
+              <h1>Create your account</h1>
+              <p>Build your personal language workspace in seconds.</p>
+            </div>
+            <form id="account-form" class="form-grid">
+              <label>
+                Name
+                <input type="text" name="name" placeholder="Alex Rivera" required />
+              </label>
+              <label>
+                Email
+                <input type="email" name="email" placeholder="alex@email.com" required />
+              </label>
+              <label>
+                Password
+                <input type="password" name="password" placeholder="At least 8 characters" required />
+              </label>
+              <label>
+                Confirm password
+                <input type="password" name="confirm" placeholder="Re-enter password" required />
+              </label>
+              <button class="primary" type="submit">Create Account</button>
+              <p class="form-hint" id="account-feedback"></p>
+            </form>
+          </section>
+
+          <section class="panel hidden" id="view-login" data-view>
+            <div class="panel-header">
+              <h1>Welcome back</h1>
+              <p>Log in to manage your languages and stories.</p>
+            </div>
+            <form id="login-form" class="form-grid">
+              <label>
+                Email
+                <input type="email" name="email" placeholder="alex@email.com" required />
+              </label>
+              <label>
+                Password
+                <input type="password" name="password" placeholder="Your password" required />
+              </label>
+              <button class="primary" type="submit">Log In</button>
+              <p class="form-hint" id="login-feedback"></p>
+            </form>
+          </section>
+
+          <section class="panel hidden" id="view-languages" data-view>
+            <div class="panel-header">
+              <h1>Your languages</h1>
+              <p>Select the languages you want to focus on this week.</p>
+            </div>
+            <div class="grid-2">
+              <div class="card">
+                <h2>Available</h2>
+                <select id="available-languages"></select>
+                <button class="primary" id="enroll-btn" type="button">Enroll language</button>
+                <p class="form-hint" id="language-feedback"></p>
+              </div>
+              <div class="card">
+                <h2>Enrolled</h2>
+                <ul id="user-languages" class="list"></ul>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel hidden" id="view-vocab" data-view>
+            <div class="panel-header">
+              <h1>Vocabulary vault</h1>
+              <p>Collect words and tag their meaning and proficiency.</p>
+            </div>
+            <div class="grid-2">
+              <form id="vocab-form" class="card">
+                <h2>Add words</h2>
+                <label>
+                  Language
+                  <select id="vocab-language"></select>
+                </label>
+                <label>
+                  Words (comma separated)
+                  <input type="text" name="word" placeholder="passion, romance, uplifting" required />
+                </label>
+                <label>
+                  Meaning (optional, applied to all)
+                  <input type="text" name="meaning" placeholder="emotions, love, positive" />
+                </label>
+                <label>
+                  Proficiency
+                  <select name="proficiency">
+                    <option value="">Choose</option>
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                  </select>
+                </label>
+                <button class="primary" type="submit">Save words</button>
+                <p class="form-hint" id="vocab-feedback"></p>
+              </form>
+              <div class="card">
+                <h2>Saved words</h2>
+                <ul id="vocab-list" class="list"></ul>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel hidden" id="view-story" data-view>
+            <div class="panel-header">
+              <h1>Story lab</h1>
+              <p>Generate short stories that reuse your vocabulary.</p>
+            </div>
+            <div class="grid-2">
+              <form id="story-form" class="card">
+                <h2>Generate</h2>
+                <label>
+                  Language
+                  <select id="story-language"></select>
+                </label>
+                <label>
+                  Story theme
+                  <textarea id="story-theme" rows="3" placeholder="Romantic city adventure with hopeful tone"></textarea>
+                </label>
+                <label>
+                  Proficiency filter
+                  <select id="story-prof">
+                    <option value="any">Any</option>
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                  </select>
+                </label>
+                <label>
+                  Max words
+                  <input type="number" id="story-max" min="3" max="40" placeholder="20" />
+                </label>
+                <div class="choice-group">
+                  <p class="choice-title">Vocabulary selection</p>
+                  <label class="radio">
+                    <input type="radio" name="vocab-mode" value="all" checked />
+                    Use all vocabulary for this language
+                  </label>
+                  <label class="radio">
+                    <input type="radio" name="vocab-mode" value="manual" />
+                    I will choose the words
+                  </label>
+                  <label class="radio">
+                    <input type="radio" name="vocab-mode" value="ai" />
+                    Let the tutor pick the most relevant for the theme
+                  </label>
+                </div>
+                <div class="card-lite">
+                  <div class="card-lite-header">
+                    <span>Choose vocabulary</span>
+                    <div class="chip-row">
+                      <button class="chip" id="select-all" type="button">Select all</button>
+                      <button class="chip" id="clear-all" type="button">Clear</button>
+                    </div>
+                  </div>
+                  <div id="story-vocab-list" class="vocab-picker"></div>
+                </div>
+                <button class="primary" type="submit">Generate story</button>
+                <p class="form-hint" id="story-feedback"></p>
+              </form>
+              <div class="card">
+                <h2>Output</h2>
+                <div id="story-output" class="story-box">No story yet. Generate one.</div>
+                <button class="ghost" id="save-story" type="button">Save story</button>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
